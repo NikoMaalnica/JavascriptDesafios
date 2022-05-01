@@ -1,11 +1,35 @@
+//VARIABLES GENERALES
 
 let cantidadEntrada
 let tipoEntrada
 let codigo = "locolope"
 let descuento = 1.3
 
+//OBJETOS ENTRADAS
+
+class Entrada {
+    constructor(nombreEntrada, valorEntrada, stockEntrada){
+        this.nombreEntrada = nombreEntrada,
+        this.valorEntrada = valorEntrada,
+        this.stockEntrada = stockEntrada
+    }
+    entradasVendidas (nuevaCantidad){ //Metodo para disminuir la cantidad de entradas vendidas
+        this.stockEntrada -= nuevaCantidad
+    }
+}
+
+const entrada1 = new Entrada ("Entrada PREMIUM", 1500, 100)
+const entrada2 = new Entrada ("Entrada Standard", 1000, 300)
+const entrada3 = new Entrada ("Entrada LowCost", 750, 500)
+
+//ARRAY QUE MUESTRA EN CONSOLE.LOG EL DETALLE DE LAS ENTRADAS
+
+let detalleEntradas = [entrada1,entrada2,entrada3]
+console.log(detalleEntradas)
 
 const valorTotal = (cantidadEntrada, tipoEntrada) => cantidadEntrada * tipoEntrada
+
+//INTERACCION CON EL USUARIO
 
 do {
     alert("BIENVENIDO AL SISTEMA DE COMPRAS DE ENTRADAS")
@@ -30,6 +54,7 @@ switch(tipoEntrada) {
             alert(`El valor total de su compra es $${valorFinal}`)
             let condicion =prompt ("¿Desea realizar la compra?").toLowerCase ()
                 if (condicion == "si"){
+                    entrada1.entradasVendidas (cantidadEntrada)
                     alert("Muchas gracias por su compra")
                 } else if(condicion == "no"){
                     alert("Miralo por TV")
@@ -41,6 +66,7 @@ switch(tipoEntrada) {
             alert(`No ha ingresado ningún codigo de descuento válido.\nEl valor total es de $${valorTotal(cantidadEntrada, tipoEntrada)}`)
             condicion =prompt ("¿Desea realizar la compra?").toLowerCase ()
                 if (condicion == "si"){
+                    entrada1.entradasVendidas (cantidadEntrada)
                     alert("Muchas gracias por su compra")
                 } else if(condicion == "no"){
                     alert("Miralo por TV")
@@ -57,6 +83,7 @@ switch(tipoEntrada) {
             alert(`El valor total de su compra es $${valorFinal}`)
             let condicion =prompt ("¿Desea realizar la compra?").toLowerCase ()
                 if (condicion == "si"){
+                    entrada2.entradasVendidas (cantidadEntrada)
                     alert("Muchas gracias por su compra")
                 } else if(condicion == "no"){
                     alert("Miralo por TV")
@@ -68,6 +95,7 @@ switch(tipoEntrada) {
             alert(`No ha ingresado ningún codigo de descuento válido.\nEl valor total es de $${valorTotal(cantidadEntrada, tipoEntrada)}`)
             condicion =prompt ("¿Desea realizar la compra?").toLowerCase ()
                 if (condicion == "si"){
+                    entrada2.entradasVendidas (cantidadEntrada)
                     alert("Muchas gracias por su compra")
                 } else if(condicion == "no"){
                     alert("Miralo por TV")
@@ -84,6 +112,7 @@ switch(tipoEntrada) {
             alert(`El valor total de su compra es $${valorFinal}`)
             let condicion =prompt ("¿Desea realizar la compra?").toLowerCase ()
                 if (condicion == "si"){
+                    entrada3.entradasVendidas (cantidadEntrada)
                     alert("Muchas gracias por su compra")
                 } else if(condicion == "no"){
                     alert("Miralo por TV")
@@ -95,6 +124,7 @@ switch(tipoEntrada) {
             alert(`No ha ingresado ningún codigo de descuento válido.\nEl valor total es de $${valorTotal(cantidadEntrada, tipoEntrada)}`)
             condicion =prompt ("¿Desea realizar la compra?").toLowerCase ()
                 if (condicion == "si"){
+                    entrada3.entradasVendidas (cantidadEntrada)
                     alert("Muchas gracias por su compra")
                 } else if(condicion == "no"){
                     alert("Miralo por TV")
@@ -103,4 +133,12 @@ switch(tipoEntrada) {
                 }
         }
         break
-    }
+}
+
+//ARRAY QUE MUESTRA EL TIPO DE ENTRADA Y LA CANTIDAD RESTANTE
+
+let entradasDisponibles = [entrada1.nombreEntrada, entrada1.stockEntrada, entrada2.nombreEntrada, entrada2.stockEntrada, entrada3.nombreEntrada, entrada3.stockEntrada]
+
+for(let entradaEnArray of entradasDisponibles) {
+    console.log (entradaEnArray)
+}
