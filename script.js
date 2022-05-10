@@ -8,8 +8,12 @@ let descuento = 1.3
 //OBJETOS ENTRADAS
 
 class Entrada {
-    constructor(nombreEntrada, valorEntrada, stockEntrada){
+    constructor(id, nombreEntrada, imagenEntrada, descripcionEntrada, beneficioEntrada, valorEntrada, stockEntrada){
+        this.id = id,
         this.nombreEntrada = nombreEntrada,
+        this.imagenEntrada = imagenEntrada,
+        this.descripcionEntrada = descripcionEntrada,
+        this.beneficioEntrada = beneficioEntrada
         this.valorEntrada = valorEntrada,
         this.stockEntrada = stockEntrada
     }
@@ -18,14 +22,40 @@ class Entrada {
     }
 }
 
-const entrada1 = new Entrada ("Entrada PREMIUM", 1500, 100)
-const entrada2 = new Entrada ("Entrada Standard", 1000, 300)
-const entrada3 = new Entrada ("Entrada LowCost", 750, 500)
+const entrada1 = new Entrada (101, "VIP Ticket", "./img/vip.jpg","La mejor experiencia para tu noche", "Meet & Greet, Acceso al VIP", 1500, 100)
+const entrada2 = new Entrada (102, "PREMIUM Ticket", "./img/premium.jpg","Lugar exclusivo cerca de los artistas","Lugar preferencial, 4 consumiciones gratis", 1000, 300)
+const entrada3 = new Entrada (103, "Standard Ticket", "./img/standard.jpg","Vive la fiesta junto a cientos de personas","2 consumiciones gratis", 750, 500)
 
 //ARRAY QUE MUESTRA EN CONSOLE.LOG EL DETALLE DE LAS ENTRADAS
 
-let detalleEntradas = [entrada1,entrada2,entrada3]
-console.log(detalleEntradas)
+let entradas = [entrada1,entrada2,entrada3]
+console.log(entradas)
+
+// DOM - CREANDO LAS CARDS
+
+let divCards = document.getElementById('divCards')
+
+entradas.forEach (entrada => {
+    divCards.innerHTML += `
+    <div id="codigo ${entrada.id}" class="card my-3 m-lg-5 m-md-2" style="width: 18rem;">
+        <div class ="divImg" style="width: 16.5rem; height: 10rem;">
+            <img src="${entrada.imagenEntrada}" class="card-img-top" alt="Imagen del club">
+        </div>
+            <div class="card-body">
+            <h5 class="card-title">Entrada: ${entrada.nombreEntrada}</h5>
+            <p class="card-text">${entrada.descripcionEntrada}</p>
+            <ul class="list-group list-group-flush mb-2">
+                <li class="list-group-item">${entrada.beneficioEntrada}</li>
+                <li class="list-group-item">Valor: $${entrada.valorEntrada}</li>
+                <li class="list-group-item">Stock disponible: ${entrada.stockEntrada}</li>
+            </ul>
+            <a href="#" class="btn btn-primary">Comprar</a>
+        </div>
+    </div>
+    `
+})
+
+
 
 const valorTotal = (cantidadEntrada, tipoEntrada) => cantidadEntrada * tipoEntrada
 
@@ -39,7 +69,7 @@ do {
     break
     } else if (condicion == "si"){
     cantidadEntrada = parseFloat(prompt ("¿Cuantas entradas desea adquirir?"))
-    tipoEntrada = prompt("Ejija el tipo de entrada:\n(1) Entrada PREMIUM \n(2) Entrada STANDARD \n(3) Entrada LOWCOST")
+    tipoEntrada = prompt("Ejija el tipo de entrada:\n(1) VIP Ticket \n(2) PREMIUM Ticket \n(3) Standard Ticket")
     }else {
     alert("Ingrese una respuesta válida")
     }
