@@ -37,7 +37,7 @@ let divCards = document.getElementById('divCards')
 
 entradas.forEach (entrada => {
     divCards.innerHTML += `
-    <div id="codigo ${entrada.id}" class="card my-3 m-lg-5 m-md-2" style="width: 18rem;">
+    <div id="codigo${entrada.id}" class="card my-3 m-lg-5 m-md-2" style="width: 18rem;">
         <div class ="divImg" style="width: 16.5rem; height: 10rem;">
             <img src="${entrada.imagenEntrada}" class="card-img-top" alt="Imagen del club">
         </div>
@@ -49,17 +49,67 @@ entradas.forEach (entrada => {
                 <li class="list-group-item">Valor: $${entrada.valorEntrada}</li>
                 <li class="list-group-item">Stock disponible: ${entrada.stockEntrada}</li>
             </ul>
-            <a href="#" class="btn btn-primary">Comprar</a>
+            <a id="btn${entrada.id}" href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#compraModal">Comprar</a>
         </div>
     </div>
     `
 })
 
+// EVENTO CLICK - AGREGANDO ENTRADAS AL MODAL
+
+entradas.forEach (entrada => {
+    let btnId = document.getElementById (`btn${entrada.id}`)
+    let divEntrada = document.getElementById (`codigo${entrada.id}`)
+    let bodyModal = document.getElementById ('bodyModal')
+    btnId.addEventListener('click', () => {
+        bodyModal.innerHTML += `
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-4 divImgModal">
+                <img src="${entrada.imagenEntrada}" class="modalImg rounded d-block rounded-start" alt="Imagen del club">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">${entrada.nombreEntrada}</h5>
+                    <p class="card-text">${entrada.descripcionEntrada}</p>
+                    <ul class="list-group list-group-flush mb-2">
+                        <li class="list-group-item">${entrada.beneficioEntrada}</li>
+                        <li class="list-group-item">Valor: $${entrada.valorEntrada}</li>
+                        <li class="list-group-item">Stock disponible: ${entrada.stockEntrada}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    `
+    })
+})
+
+
+/*
+
+// EVENTO PARA AGREGAR AL MODAL CLONANDO 
+
+entradas.forEach (entrada => {
+    let btnId = document.getElementById (`btn${entrada.id}`)
+    let divEntrada = document.getElementById (`codigo${entrada.id}`)
+    let bodyModal = document.getElementById ('bodyModal')
+    let clone = divEntrada.cloneNode (true);
+    btnId.addEventListener('click', () => {
+        bodyModal.appendChild (clone)
+        }
+    )
+})
+
+
+*/
 
 
 const valorTotal = (cantidadEntrada, tipoEntrada) => cantidadEntrada * tipoEntrada
 
 //INTERACCION CON EL USUARIO
+
+/*
 
 do {
     alert("BIENVENIDO AL SISTEMA DE COMPRAS DE ENTRADAS")
@@ -164,6 +214,8 @@ switch(tipoEntrada) {
         }
         break
 }
+
+*/
 
 //ARRAY QUE MUESTRA EL TIPO DE ENTRADA Y LA CANTIDAD RESTANTE
 
