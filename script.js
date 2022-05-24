@@ -2,8 +2,6 @@
 
 let cantidadEntrada
 let tipoEntrada
-let codigo = "locolope"
-let descuento = 1.3
 
 const valorTotal = (cantidadEntrada, tipoEntrada) => cantidadEntrada * tipoEntrada
 
@@ -58,29 +56,27 @@ entradas.forEach (entrada => {
 
 let carrito = []
 
-if (localStorage.getItem('carrito')){
-    // JSON A OBJETO
-    carrito = JSON.parse(localStorage.getItem('carrito'))
-} else {
-    //OBJETO A JSON
-    localStorage.setItem('carrito', JSON.stringify(carrito))
-}
+// OPERADORES AVANZADOS >>> JSON A OBJETO >>> OBJETO A JSON
+
+localStorage.getItem('carrito') ? carrito = JSON.parse(localStorage.getItem('carrito')) : localStorage.setItem('carrito', JSON.stringify(carrito))
 
 // EVENTO CLICK - AGREGANDO ENTRADAS AL MODAL Y AL CARRITO DEL LOCAL STORAGE
 
 entradas.forEach (entrada => {
-    let btnId = document.querySelector (`#btn${entrada.id}`)
     let bodyModal = document.querySelector ('#bodyModal')
-    btnId.addEventListener('click', () => {
+    document.querySelector (`#btn${entrada.id}`).addEventListener('click', () => {
         bodyModal.innerHTML += `
-        <div class="card mb-3" style="max-width: 540px;">
-            <div id="modalDiv${entrada.id}"class="row g-0">
+        <div id="modalDiv${entrada.id}" class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
                 <div class="col-md-4 divImgModal">
                     <img src="${entrada.imagenEntrada}" class="modalImg rounded d-block rounded-start" alt="Imagen del club">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class="card-title">${entrada.nombreEntrada}</h5>
+                        <div class="cardTitleButton d-flex justify-content-between">
+                            <h5 class="card-title">${entrada.nombreEntrada}</h5>
+                            <button id="btnDelete${entrada.id}">Borrar</button>
+                        </div>
                         <p class="card-text">${entrada.descripcionEntrada}</p>
                         <ul class="list-group list-group-flush mb-2">
                             <li class="list-group-item">${entrada.beneficioEntrada}</li>
@@ -92,8 +88,25 @@ entradas.forEach (entrada => {
             </div>
         </div>
         `
+        //BOTON ELIMINAR EN MODAL
+        let btnDelete = document.querySelector (`#btnDelete${entrada.id}`)
+        let modalDiv = document.querySelector (`#modalDiv${entrada.id}`)
+        btnDelete.addEventListener ('click', () => {
+        modalDiv.remove ()
+        })
+        // AREGANDO AL LOCAL SOTRAGE - SPREAD
         let entradaEnCarrito = entrada
-        carrito.push (entradaEnCarrito)
+        carrito.push ({...entradaEnCarrito, cantidad:1})
         localStorage.setItem ('carrito', JSON.stringify(carrito))
+    })
+})
+
+// LIBRERIAS
+
+document.querySelector('#btnComprar').addEventListener ('click', () => {
+    Swal.fire({
+        icon: 'success',
+        title: `Has realizado la compra.`,
+        text: 'Muchas gracias!',
     })
 })

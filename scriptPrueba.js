@@ -34,6 +34,9 @@ comprador1.saludar()*/
 
 /*
 
+let codigo = "locolope"
+let descuento = 1.3
+
 class Entrada {
     constructor(nombreEntrada, valorEntrada, stockEntrada){
         this.nombreEntrada = nombreEntrada,
@@ -209,4 +212,14 @@ entradas.forEach (entrada => {
     )
 })
 
+*/
+
+/*
+if (localStorage.getItem('carrito')){
+    // JSON A OBJETO
+    carrito = JSON.parse(localStorage.getItem('carrito'))
+} else {
+    //OBJETO A JSON
+    localStorage.setItem('carrito', JSON.stringify(carrito))
+}
 */
