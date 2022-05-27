@@ -10,3 +10,7 @@
 .modalImg {
     height: 15rem;
 }
+
+.bi-trash-fill:hover {
+    cursor: pointer;
+}

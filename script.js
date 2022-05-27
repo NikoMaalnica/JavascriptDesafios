@@ -4,6 +4,7 @@ let cantidadEntrada
 let tipoEntrada
 
 const valorTotal = (cantidadEntrada, tipoEntrada) => cantidadEntrada * tipoEntrada
+const valorTotalPrevio = (value, valorEntrada) => value * valorEntrada
 
 //OBJETOS ENTRADAS
 
@@ -75,29 +76,62 @@ entradas.forEach (entrada => {
                     <div class="card-body">
                         <div class="cardTitleButton d-flex justify-content-between">
                             <h5 class="card-title">${entrada.nombreEntrada}</h5>
-                            <button id="btnDelete${entrada.id}">Borrar</button>
+                            <a id="btnDelete${entrada.id}"><i class="bi bi-trash-fill"></i></a>
                         </div>
                         <p class="card-text">${entrada.descripcionEntrada}</p>
                         <ul class="list-group list-group-flush mb-2">
                             <li class="list-group-item">${entrada.beneficioEntrada}</li>
                             <li class="list-group-item">Valor: $${entrada.valorEntrada}</li>
-                            <li class="list-group-item">Stock disponible: ${entrada.stockEntrada}</li>
                         </ul>
+                        <form id="formCalcular" class="input-group mb-3">
+                            <label class="input-group-text" for="inputGroupSelect01">Cantidad</label>
+                            <select class="form-select" id="inputGroupSelect01">
+                                <option value="1" selected>1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                            <button id="botonCalcular" class="btn btn-outline-secondary" type="submit">Calcular</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
         `
-        //BOTON ELIMINAR EN MODAL
+        //CALCULAR VALOR TOTAL DE LAS ENTRADAS USANDO EL INPUT DEL MODAL 
+        let e = document.getElementById("inputGroupSelect01");
+        console.log(e.value)
+        let formCalcular = document.querySelector ('#formCalcular')
+        let valorTotalModal = document.querySelector ('#modalFooterValor')
+        formCalcular.addEventListener('submit', (event) => {
+            valorTotalModal.innerHTML = `<p>Valor Total: $${e.value*entrada.valorEntrada}</p>`
+            event.preventDefault ()
+            console.log(e.value*entrada.valorEntrada)
+        })
+        
+        //BOTON ELIMINAR EN MODAL - TOASTIFY
         let btnDelete = document.querySelector (`#btnDelete${entrada.id}`)
         let modalDiv = document.querySelector (`#modalDiv${entrada.id}`)
         btnDelete.addEventListener ('click', () => {
         modalDiv.remove ()
+        Toastify({
+            text: `${entrada.nombreEntrada} eliminado`,
+            duration: 3000,
+            newWindow: true,
+            close: false,
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true,
+            style: {
+            background: "linear-gradient(to right, #b00000, #c9a83d)",
+            },
+            onClick: function(){} // Callback after click
+        }).showToast();
         })
         // AREGANDO AL LOCAL SOTRAGE - SPREAD
         let entradaEnCarrito = entrada
         carrito.push ({...entradaEnCarrito, cantidad:1})
         localStorage.setItem ('carrito', JSON.stringify(carrito))
+        
     })
 })
 
