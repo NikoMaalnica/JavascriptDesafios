@@ -1,0 +1,29 @@
+[
+    {
+        "id": 101,
+        "nombreEntrada": "VIP Ticket",
+        "imagenEntrada": "./img/vip.jpg",
+        "descripcionEntrada": "La mejor experiencia para tu noche",
+        "beneficioEntrada": "Meet & Greet, Acceso al VIP",
+        "valorEntrada": 4500,
+        "stockEntrada": 100
+    },
+    {
+        "id": 102,
+        "nombreEntrada": "PREMIUM Ticket",
+        "imagenEntrada": "./img/premium.jpg",
+        "descripcionEntrada": "Lugar exclusivo cerca de los artistas",
+        "beneficioEntrada": "Lugar preferencial, 4 consumiciones gratis",
+        "valorEntrada": 3000,
+        "stockEntrada": 300
+    },
+    {
+        "id": 103,
+        "nombreEntrada": "Standard Ticket",
+        "imagenEntrada": "./img/standard.jpg",
+        "descripcionEntrada": "Vive la fiesta junto a cientos de personas",
+        "beneficioEntrada": "2 consumiciones gratis",
+        "valorEntrada": 1500,
+        "stockEntrada":500
+    }
+]
