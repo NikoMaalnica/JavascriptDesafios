@@ -14,3 +14,7 @@
 .bi-trash-fill:hover {
     cursor: pointer;
 }
+
+.partyMode {
+    background-image:url('https://png.pngtree.com/background/20210716/original/pngtree-red-blue-neon-background-picture-image_1343840.jpg');
+}

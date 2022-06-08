@@ -143,3 +143,29 @@ document.querySelector('#btnComprar').addEventListener ('click', () => {
         text: 'Muchas gracias!',
     })
 })
+
+// BOTON PARTY MODE
+
+let partyMode
+
+if (localStorage.getItem('partyMode')) {
+    partyMode = localStorage.getItem('partyMode')
+} else {
+    localStorage.setItem('partyMode', 'chill')
+}
+
+if (partyMode == 'party') {
+    document.body.classList.add ('partyMode')
+} else {
+    document.body.classList.remove ('partyMode')
+}
+
+document.querySelector ('#btnradio2').addEventListener ('click', () => {
+    document.body.classList.add ('partyMode')
+    localStorage.setItem('partyMode', 'party')
+})
+
+document.querySelector ('#btnradio1').addEventListener ('click', () => {
+    document.body.classList.remove ('partyMode')
+    localStorage.setItem('partyMode', 'chill')
+})
