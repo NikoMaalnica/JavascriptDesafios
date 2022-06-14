@@ -39,7 +39,7 @@ fetch('entradas.json')
                 <ul class="list-group list-group-flush mb-2">
                     <li class="list-group-item">${entrada.beneficioEntrada}</li>
                     <li class="list-group-item">Valor: $${entrada.valorEntrada}</li>
-                    <li class="list-group-item">Stock disponible: ${entrada.stockEntrada}</li>
+                    <li id="stock${entrada.id}" class="list-group-item">Stock disponible: ${entrada.stockEntrada}</li>
                 </ul>
                 <a id="btn${entrada.id}" href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#compraModal">Comprar</a>
             </div>
@@ -125,6 +125,18 @@ fetch('entradas.json')
                 onClick: function(){} // Callback after click
             }).showToast();
             })
+            // BOTON COMPRAR
+            document.querySelector('#btnComprar').addEventListener ('click', () => {
+                Swal.fire({
+                    icon: 'success',
+                    title: `Has realizado la compra.`,
+                    text: 'Muchas gracias!',
+                })
+                //console.log (entrada.stockEntrada-e.value)
+                nuevoStock = document.querySelector(`#stock${entrada.id}`)
+                nuevoStock.innerHTML = `Stock Disponible: ${entrada.stockEntrada-e.value}`
+                modalDiv.remove ()
+            })
             // AREGANDO AL LOCAL SOTRAGE - SPREAD
             let entradaEnCarrito = entrada
             carrito.push ({...entradaEnCarrito, cantidad:1})
@@ -136,13 +148,15 @@ fetch('entradas.json')
 
 // LIBRERIAS
 
-document.querySelector('#btnComprar').addEventListener ('click', () => {
+
+/* document.querySelector('#btnComprar').addEventListener ('click', () => {
     Swal.fire({
         icon: 'success',
         title: `Has realizado la compra.`,
         text: 'Muchas gracias!',
     })
-})
+    modalDiv.remove ()
+}) */
 
 // BOTON PARTY MODE
 
@@ -155,17 +169,24 @@ if (localStorage.getItem('partyMode')) {
 }
 
 if (partyMode == 'party') {
-    document.body.classList.add ('partyMode')
+    document.body.removeAttribute('id', 'chill')
+    document.body.setAttribute('id', 'gradient')
 } else {
-    document.body.classList.remove ('partyMode')
+    document.body.removeAttribute('id', 'gradient')
+    document.body.removeAttribute('style')
+    document.body.setAttribute('id', 'chill')
 }
 
+document.querySelector ('#btnradio1').addEventListener ('click', () => {
+    document.body.removeAttribute('id', 'gradient')
+    document.body.removeAttribute('style')
+    document.body.setAttribute('id', 'chill')
+    localStorage.setItem('partyMode', 'chill')
+})
+
 document.querySelector ('#btnradio2').addEventListener ('click', () => {
-    document.body.classList.add ('partyMode')
+    document.body.removeAttribute('id', 'chill')
+    document.body.setAttribute('id', 'gradient')
     localStorage.setItem('partyMode', 'party')
 })
 
-document.querySelector ('#btnradio1').addEventListener ('click', () => {
-    document.body.classList.remove ('partyMode')
-    localStorage.setItem('partyMode', 'chill')
-})
