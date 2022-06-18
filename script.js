@@ -29,19 +29,21 @@ fetch('entradas.json')
 .then(entradas => {
     entradas.forEach (entrada => {
         divCards.innerHTML += `
-        <div id="codigo${entrada.id}" class="card my-3 m-lg-5 m-md-2" style="width: 18rem;">
+        <div id="codigo${entrada.id}" class="card cardIndex my-3 m-lg-5 m-md-2" style="width: 18rem;">
             <div class ="divImg" style="width: 16.5rem; height: 10rem;">
                 <img src="${entrada.imagenEntrada}" class="card-img-top" alt="Imagen del club">
             </div>
-                <div class="card-body">
-                <h5 class="card-title">Entrada: ${entrada.nombreEntrada}</h5>
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-center">Entrada: ${entrada.nombreEntrada}</h5>
                 <p class="card-text">${entrada.descripcionEntrada}</p>
                 <ul class="list-group list-group-flush mb-2">
                     <li class="list-group-item">${entrada.beneficioEntrada}</li>
                     <li class="list-group-item">Valor: $${entrada.valorEntrada}</li>
                     <li id="stock${entrada.id}" class="list-group-item">Stock disponible: ${entrada.stockEntrada}</li>
                 </ul>
-                <a id="btn${entrada.id}" href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#compraModal">Comprar</a>
+                <div class="d-flex mt-auto align-self-center">
+                    <a id="btn${entrada.id}" href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#compraModal">Comprar</a>
+                </div>
             </div>
         </div>
         `
@@ -81,14 +83,14 @@ fetch('entradas.json')
                                 <li class="list-group-item">${entrada.beneficioEntrada}</li>
                                 <li class="list-group-item">Valor: $${entrada.valorEntrada}</li>
                             </ul>
-                            <form id="formCalcular" class="input-group mb-3">
+                            <form id="formCalcular" class="input-group input-group-sm mb-3">
                                 <label class="input-group-text" for="inputGroupSelect01">Cantidad</label>
                                 <select class="form-select" id="inputGroupSelect01">
                                     <option value="1" selected>1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                 </select>
-                                <button id="botonCalcular" class="btn btn-outline-secondary" type="submit">Calcular</button>
+                                <button id="botonCalcular" class="btn btn-outline-secondary btn-sm" type="submit">Calcular</button>
                             </form>
                         </div>
                     </div>
