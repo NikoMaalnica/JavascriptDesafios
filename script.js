@@ -91,13 +91,11 @@ fetch('entradas.json')
                 
             //CALCULAR VALOR TOTAL DE LAS ENTRADAS USANDO EL INPUT DEL MODAL 
             let e = document.getElementById("inputGroupSelect01");
-            console.log(e.value)
             let formCalcular = document.querySelector ('#formCalcular')
             let valorTotalModal = document.querySelector ('#modalFooterValor')
             formCalcular.addEventListener('submit', (event) => {
                 valorTotalModal.innerHTML = `<p>Valor Total: $${e.value*entrada.valorEntrada}</p>`
                 event.preventDefault ()
-                console.log(e.value*entrada.valorEntrada)
             })
             
             //BOTON ELIMINAR EN MODAL - TOASTIFY
