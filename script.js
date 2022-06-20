@@ -1,11 +1,3 @@
-//VARIABLES GENERALES
-
-let cantidadEntrada
-let tipoEntrada
-
-const valorTotal = (cantidadEntrada, tipoEntrada) => cantidadEntrada * tipoEntrada
-const valorTotalPrevio = (value, valorEntrada) => value * valorEntrada
-
 //OBJETOS ENTRADAS
 
 class Entrada {
@@ -50,14 +42,6 @@ fetch('entradas.json')
     })
 })
 
-//LOCAL STORAGE
-
-let carrito = []
-
-// OPERADORES AVANZADOS >>> JSON A OBJETO >>> OBJETO A JSON
-
-localStorage.getItem('carrito') ? carrito = JSON.parse(localStorage.getItem('carrito')) : localStorage.setItem('carrito', JSON.stringify(carrito))
-
 // EVENTO CLICK - AGREGANDO ENTRADAS AL MODAL Y AL CARRITO DEL LOCAL STORAGE - FETCH
 
 fetch('entradas.json')
@@ -66,37 +50,44 @@ fetch('entradas.json')
     entradas.forEach (entrada => {
         let bodyModal = document.querySelector ('#bodyModal')
         document.querySelector (`#btn${entrada.id}`).addEventListener('click', () => {
-            bodyModal.innerHTML += `
-            <div id="modalDiv${entrada.id}" class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-4 divImgModal">
-                        <img src="${entrada.imagenEntrada}" class="modalImg rounded d-block rounded-start" alt="Imagen del club">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <div class="cardTitleButton d-flex justify-content-between">
-                                <h5 class="card-title">${entrada.nombreEntrada}</h5>
-                                <a id="btnDelete${entrada.id}"><i class="bi bi-trash-fill"></i></a>
+                if ($(`#modalDiv${entrada.id}`).length) {
+                    Swal.fire(
+                        'Entrada ya seleccionada',
+                        'Ya tienes esta entrada en el carrito',
+                        'warning'
+                    )
+                } else {
+                bodyModal.innerHTML += `
+                <div id="modalDiv${entrada.id}" class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4 divImgModal">
+                            <img src="${entrada.imagenEntrada}" class="modalImg rounded d-block rounded-start" alt="Imagen del club">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <div class="cardTitleButton d-flex justify-content-between">
+                                    <h5 class="card-title">${entrada.nombreEntrada}</h5>
+                                    <a id="btnDelete${entrada.id}"><i class="bi bi-trash-fill"></i></a>
+                                </div>
+                                <p class="card-text">${entrada.descripcionEntrada}</p>
+                                <ul class="list-group list-group-flush mb-2">
+                                    <li class="list-group-item">${entrada.beneficioEntrada}</li>
+                                    <li class="list-group-item">Valor: $${entrada.valorEntrada}</li>
+                                </ul>
+                                <form id="formCalcular" class="input-group input-group-sm mb-3">
+                                    <label class="input-group-text" for="inputGroupSelect01">Cantidad</label>
+                                    <select class="form-select" id="inputGroupSelect01">
+                                        <option value="1" selected>1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                    <button id="botonCalcular" class="btn btn-outline-secondary btn-sm" type="submit">Calcular</button>
+                                </form>
                             </div>
-                            <p class="card-text">${entrada.descripcionEntrada}</p>
-                            <ul class="list-group list-group-flush mb-2">
-                                <li class="list-group-item">${entrada.beneficioEntrada}</li>
-                                <li class="list-group-item">Valor: $${entrada.valorEntrada}</li>
-                            </ul>
-                            <form id="formCalcular" class="input-group input-group-sm mb-3">
-                                <label class="input-group-text" for="inputGroupSelect01">Cantidad</label>
-                                <select class="form-select" id="inputGroupSelect01">
-                                    <option value="1" selected>1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                </select>
-                                <button id="botonCalcular" class="btn btn-outline-secondary btn-sm" type="submit">Calcular</button>
-                            </form>
                         </div>
                     </div>
                 </div>
-            </div>
-            `
+                `}
             //CALCULAR VALOR TOTAL DE LAS ENTRADAS USANDO EL INPUT DEL MODAL 
             let e = document.getElementById("inputGroupSelect01");
             console.log(e.value)
@@ -129,36 +120,26 @@ fetch('entradas.json')
             })
             // BOTON COMPRAR
             document.querySelector('#btnComprar').addEventListener ('click', () => {
-                Swal.fire({
-                    icon: 'success',
-                    title: `Has realizado la compra.`,
-                    text: 'Muchas gracias!',
-                })
-                //console.log (entrada.stockEntrada-e.value)
-                nuevoStock = document.querySelector(`#stock${entrada.id}`)
-                nuevoStock.innerHTML = `Stock Disponible: ${entrada.stockEntrada-e.value}`
-                modalDiv.remove ()
+                if ($(`#modalDiv${entrada.id}`).length) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: `Has realizado la compra.`,
+                        text: 'Muchas gracias!',
+                    })
+                    nuevoStock = document.querySelector(`#stock${entrada.id}`)
+                    nuevoStock.innerHTML = `Stock Disponible: ${entrada.stockEntrada-=e.value}`
+                    modalDiv.remove ()
+                } else {
+                    Swal.fire(
+                        'Carrito vacio',
+                        'No has seleccionado ninguna entrada',
+                        'error'
+                    )
+                }
             })
-            // AREGANDO AL LOCAL SOTRAGE - SPREAD
-            let entradaEnCarrito = entrada
-            carrito.push ({...entradaEnCarrito, cantidad:1})
-            localStorage.setItem ('carrito', JSON.stringify(carrito))
-            
         })
     })
 })
-
-// LIBRERIAS
-
-
-/* document.querySelector('#btnComprar').addEventListener ('click', () => {
-    Swal.fire({
-        icon: 'success',
-        title: `Has realizado la compra.`,
-        text: 'Muchas gracias!',
-    })
-    modalDiv.remove ()
-}) */
 
 // BOTON PARTY MODE
 
