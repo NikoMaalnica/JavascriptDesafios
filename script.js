@@ -42,7 +42,7 @@ fetch('entradas.json')
     })
 })
 
-// EVENTO CLICK - AGREGANDO ENTRADAS AL MODAL Y AL CARRITO DEL LOCAL STORAGE - FETCH
+// EVENTO CLICK - AGREGANDO ENTRADAS AL MODAL - FETCH
 
 fetch('entradas.json')
 .then(response => response.json())
@@ -88,6 +88,7 @@ fetch('entradas.json')
                     </div>
                 </div>
                 `}
+                
             //CALCULAR VALOR TOTAL DE LAS ENTRADAS USANDO EL INPUT DEL MODAL 
             let e = document.getElementById("inputGroupSelect01");
             console.log(e.value)
@@ -115,7 +116,7 @@ fetch('entradas.json')
                 style: {
                 background: "linear-gradient(to right, #b00000, #c9a83d)",
                 },
-                onClick: function(){} // Callback after click
+                onClick: function(){}
             }).showToast();
             })
             // BOTON COMPRAR
